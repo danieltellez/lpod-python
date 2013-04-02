@@ -310,7 +310,9 @@ def odf_create_table_cell_style(border=None, border_top=None,
                                 border_bottom=None,
                                 border_left=None, border_right=None,
                                 background_color=None, shadow=None,
-                                color=None):
+                                color=None, 
+                                padding_left=None, padding_right=None,
+                                padding_top=None, padding_bottom=None):
                                 #parent='Standard'):
     if border is not None:
         border_bottom = border_top = border_left = border_right = None
@@ -328,6 +330,10 @@ def odf_create_table_cell_style(border=None, border_top=None,
                                   border_bottom=border_bottom,
                                   border_left=border_left,
                                   border_right=border_right,
+                                  padding_left=padding_left,
+                                  padding_right=padding_right,
+                                  padding_top=padding_top,
+                                  padding_bottom=padding_bottom,
                                   background_color=bgcolor_string,
                                   shadow=shadow)
     if color:
@@ -347,7 +353,8 @@ def odf_create_style(family, name=None, display_name=None, parent=None,
         page_layout=None, next_style=None,
         # For family 'table-cell'
         data_style=None, border=None, border_top=None, border_right=None,
-        border_bottom=None, border_left=None, shadow=None,
+        border_bottom=None, border_left=None, shadow=None, 
+        padding_top=None, padding_bottom=None, padding_left=None, padding_right=None,
         # For family 'table-row'
         height=None, use_optimal_height=None,
         # For family 'table-column'
@@ -480,6 +487,14 @@ def odf_create_style(family, name=None, display_name=None, parent=None,
             kw['style:shadow'] = shadow
         if background_color:
             kw['fo:background-color'] = background_color
+        if padding_top:
+            kw['fo:padding-top'] = padding_top
+        if padding_bottom:
+            kw['fo:padding-bottom'] = padding_bottom
+        if padding_left:
+            kw['fo:padding-left'] = padding_left
+        if padding_right:
+            kw['fo:padding-right'] = padding_right
     # Table row
     elif area == 'table-row':
         if height:
@@ -487,6 +502,8 @@ def odf_create_style(family, name=None, display_name=None, parent=None,
         if use_optimal_height is not None:
             kw['style:use-optimal-row-height'] = Boolean.encode(
                     use_optimal_height)
+        if background_color:
+            kw['fo:background-color'] = background_color
     # Table column
     elif area == 'table-column':
         if width:
@@ -502,6 +519,7 @@ def odf_create_style(family, name=None, display_name=None, parent=None,
     # Every other properties
     if kw:
         element.set_properties(kw, area=area)
+
     return element
 
 
