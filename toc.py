@@ -81,7 +81,7 @@ def odf_create_toc(title=u"Table of Contents", name=None, protected=True,
 
 
 def odf_create_toc_source(title=None, outline_level=10,
-        title_style=u"Contents_20_Heading", entry_style=u"Contents_20_%d"):
+        title_style=u"Contents_20_Heading", entry_style=u"Contents_20_%d", supress_numbering=True):
     element = odf_create_element('text:table-of-content-source')
     element.set_outline_level(outline_level)
     if title:
@@ -91,15 +91,20 @@ def odf_create_toc_source(title=None, outline_level=10,
             title_template.set_style(title_style)
         title_template.set_text(title)
         element.append(title_template)
+    if not supress_numbering:
+        numbering_text = "<text:index-entry-chapter/>"
+    else:
+        numbering_text = ''
+
     for level in range(1, 11):
         template = odf_create_element('''<text:table-of-content-entry-template
           text:outline-level="%d">
-          <text:index-entry-chapter/>
+          %s
           <text:index-entry-text/>
           <text:index-entry-tab-stop style:type="right"
             style:leader-char="."/>
           <text:index-entry-page-number/>
-         </text:table-of-content-entry-template>''' % level)
+         </text:table-of-content-entry-template>''' % (level, numering_text))
         if entry_style:
             template.set_style(entry_style % level)
         element.append(template)
