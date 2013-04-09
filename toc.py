@@ -91,15 +91,15 @@ def odf_create_toc_source(title=None, outline_level=10,
             title_template.set_style(title_style)
         title_template.set_text(title)
         element.append(title_template)
-    if not supress_numbering:
-        numbering_text = "<text:index-entry-chapter/>"
+    if supress_numbering:
+        numbering_text = "name"
     else:
-        numbering_text = ''
+        numbering_text = "number-and-name"
 
     for level in range(1, 11):
         template = odf_create_element('''<text:table-of-content-entry-template
           text:outline-level="%d">
-          %s
+          <text:index-entry-chapter text:display="%s"/>
           <text:index-entry-text/>
           <text:index-entry-tab-stop style:type="right"
             style:leader-char="."/>
