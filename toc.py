@@ -104,7 +104,7 @@ def odf_create_toc_source(title=None, outline_level=10,
           <text:index-entry-tab-stop style:type="right"
             style:leader-char="."/>
           <text:index-entry-page-number/>
-         </text:table-of-content-entry-template>''' % (level, numering_text))
+         </text:table-of-content-entry-template>''' % (level, numbering_text))
         if entry_style:
             template.set_style(entry_style % level)
         element.append(template)
